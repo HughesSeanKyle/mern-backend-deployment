@@ -20,7 +20,7 @@ app.use(express.json({ extended: false }));
 	Reference this for restful route guide 
 	- https://medium.com/@shubhangirajagrawal/the-7-restful-routes-a8e84201f206
 */
-app.use('/users', userRouter);
+app.use(userRouter);
 app.use('/auth', authRouter);
 app.use('/post', postRouter);
 app.use('/profile', profileRouter);

@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const connectToMongo = require('./config/db')();
 const path = require('path');
+const cors = require('cors');
 
 const userRouter = require('./routes/api/users');
 const authRouter = require('./routes/api/auth');
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(cors());
 
 // Define Routes
 /*

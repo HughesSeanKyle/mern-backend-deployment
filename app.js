@@ -25,10 +25,10 @@ app.use(express.json({ extended: false }));
 19/08 - Update all other routes like user router. Then continue with client. Push to Netlify and use heroku routes when building out app further
 */
 app.use(userRouter);
-app.use('/auth', authRouter);
-app.use('/post', postRouter);
-app.use('/profile', profileRouter);
-app.use('/chart', chartRouter);
+app.use(authRouter);
+app.use(postRouter);
+app.use(profileRouter);
+app.use(chartRouter);
 
 app.get('/test-get', (req, res) => {
 	res.send('Hello from the root route. Update, check heroku auto deploy');

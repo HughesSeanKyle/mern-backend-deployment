@@ -31,7 +31,7 @@ app.use(profileRouter);
 app.use(chartRouter);
 
 app.get('/test-get', (req, res) => {
-	res.send('Hello from the root route. Update, Two');
+	res.send('Hello from the root route. Update, Two three four ');
 });
 
 // Serve static assets in production

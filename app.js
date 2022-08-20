@@ -20,6 +20,10 @@ app.use(express.json({ extended: false }));
 	Reference this for restful route guide 
 	- https://medium.com/@shubhangirajagrawal/the-7-restful-routes-a8e84201f206
 */
+
+/*
+19/08 - Update all other routes like user router. Then continue with client. Push to Netlify and use heroku routes when building out app further
+*/
 app.use(userRouter);
 app.use('/auth', authRouter);
 app.use('/post', postRouter);
@@ -27,7 +31,7 @@ app.use('/profile', profileRouter);
 app.use('/chart', chartRouter);
 
 app.get('/test-get', (req, res) => {
-	res.send('Hello from the root route');
+	res.send('Hello from the root route. Update, check heroku auto deploy');
 });
 
 // Serve static assets in production

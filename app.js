@@ -31,7 +31,7 @@ app.use(profileRouter);
 app.use(chartRouter);
 
 app.get('/test-get', (req, res) => {
-	res.send('Hello from the root route. Update, check heroku auto deploy');
+	res.send('Hello from the root route. Update, Two');
 });
 
 // Serve static assets in production

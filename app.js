@@ -7,6 +7,7 @@ const cors = require('cors');
 const userRouter = require('./routes/api/users');
 const authRouter = require('./routes/api/auth');
 const postRouter = require('./routes/api/post');
+const projectRouter = require('./routes/api/project');
 const profileRouter = require('./routes/api/profile');
 const chartRouter = require('./routes/api/chart');
 
@@ -29,6 +30,7 @@ app.use(cors());
 app.use(userRouter);
 app.use(authRouter);
 app.use(postRouter);
+app.use(projectRouter);
 app.use(profileRouter);
 app.use(chartRouter);
 

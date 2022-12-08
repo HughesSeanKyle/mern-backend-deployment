@@ -1,5 +1,0 @@
-{
-	"version": 2,
-	"name": "NiFTy$wap_2",
-	"routes": [{ "src": "/(.*)", "dest": "/index.js" }]
-}

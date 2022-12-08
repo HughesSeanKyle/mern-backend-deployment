@@ -1,6 +1,6 @@
 {
-	"version": 1,
-	"name": "NiFTy$wap",
+	"version": 2,
+	"name": "NiFTy$wap_2",
 	"builds": [{ "src": "app.js", "use": "@vercel/node" }],
 	"routes": [{ "src": "/(.*)", "dest": "/app.js" }]
 }

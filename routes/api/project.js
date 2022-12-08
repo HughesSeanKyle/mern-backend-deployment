@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 // @access private (USer must be logged in to create a project)
 
 router.post(
-	'/api/projects',
+	'/projects',
 	[
 		auth,
 		[
@@ -61,7 +61,7 @@ router.post(
 // @desc Get all projects
 // @access private (Users must be logged in to see comments)
 
-router.get('/api/projects', auth, async (req, res) => {
+router.get('/projects', auth, async (req, res) => {
 	try {
 		// Sorting by -1 will return the most recent projects
 		const projects = await Project.find().sort({ date: -1 });
@@ -78,7 +78,7 @@ router.get('/api/projects', auth, async (req, res) => {
 // @desc Get post by id
 // @access private (Users must be logged in to see comments)
 
-router.get('/api/project/:id', auth, async (req, res) => {
+router.get('/project/:id', auth, async (req, res) => {
 	try {
 		const project = await Project.findById(req.params.id);
 
@@ -103,7 +103,7 @@ router.get('/api/project/:id', auth, async (req, res) => {
 // @desc Delete post by id
 // @access private (User must be logged in to delete => This is a user admin log in (The content provider))
 
-router.delete('/api/project/:id', auth, async (req, res) => {
+router.delete('/project/:id', auth, async (req, res) => {
 	try {
 		const project = await Project.findById(req.params.id);
 
@@ -135,7 +135,7 @@ router.delete('/api/project/:id', auth, async (req, res) => {
 // @route PUT /project/like/:id
 // @desc Like a project - (Voting mechanism will come into play here. For now use eth as a unit to vote)
 // @access private
-router.put('/api/project/like/:id', auth, async (req, res) => {
+router.put('/project/like/:id', auth, async (req, res) => {
 	try {
 		const project = await Project.findById(req.params.id);
 
@@ -165,7 +165,7 @@ router.put('/api/project/like/:id', auth, async (req, res) => {
 // @route PUT /project/unlike/:id
 // @desc Like a project
 // @access private
-router.put('/api/project/unlike/:id', auth, async (req, res) => {
+router.put('/project/unlike/:id', auth, async (req, res) => {
 	try {
 		const project = await project.findById(req.params.id);
 
@@ -202,7 +202,7 @@ router.put('/api/project/unlike/:id', auth, async (req, res) => {
 // @access private (User must be logged in to comment on a project)
 
 router.post(
-	'/api/project/comment/:id',
+	'/project/comment/:id',
 	[auth, [check('text', 'Text is required').not().isEmpty()]],
 	async (req, res) => {
 		console.log('Posts route hit');
@@ -247,53 +247,49 @@ router.post(
 // @route DELETE /project/comment/:id/:comment_id
 // @desc Delete on a comment on a project
 // @access private (USer must be logged in to delete a post)
-router.delete(
-	'/api/project/comment/:id/:comment_id',
-	auth,
-	async (req, res) => {
-		try {
-			const project = await Project.findById(req.params.id);
+router.delete('/project/comment/:id/:comment_id', auth, async (req, res) => {
+	try {
+		const project = await Project.findById(req.params.id);
 
-			// Extract comment
-			const extractedComment = project.comments.find(
-				(comment) => comment.id === req.params.comment_id
-			);
+		// Extract comment
+		const extractedComment = project.comments.find(
+			(comment) => comment.id === req.params.comment_id
+		);
 
-			// Make sure comment exist
-			if (!extractedComment) {
-				return res.status(404).json({
-					msg: 'Comment does not exists',
-				});
-			}
+		// Make sure comment exist
+		if (!extractedComment) {
+			return res.status(404).json({
+				msg: 'Comment does not exists',
+			});
+		}
 
-			// Check user
-			/*
+		// Check user
+		/*
 			The user id within the model is of type object and must be converted to a string to compare to id of authorized user (from JWT)
 		*/
-			if (extractedComment.user.toString() !== req.user.id) {
-				return res.status(401).json({ msg: 'User not authorized' });
-			}
+		if (extractedComment.user.toString() !== req.user.id) {
+			return res.status(401).json({ msg: 'User not authorized' });
+		}
 
-			// Get remove index
-			/*
+		// Get remove index
+		/*
 			Return the index of the comment where the user id on comment matches the authed user
 		*/
-			const removeIndex = project.comments
-				.map((comment) => comment.user.toString())
-				.indexOf(req.user.id);
+		const removeIndex = project.comments
+			.map((comment) => comment.user.toString())
+			.indexOf(req.user.id);
 
-			project.comments.splice(removeIndex, 1);
+		project.comments.splice(removeIndex, 1);
 
-			await project.save();
+		await project.save();
 
-			res.status(200).json({
-				data: project.comments,
-			});
-		} catch (err) {
-			console.error(err.message);
-			res.status(500).send('Server Error');
-		}
+		res.status(200).json({
+			data: project.comments,
+		});
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
 	}
-);
+});
 
 module.exports = router;

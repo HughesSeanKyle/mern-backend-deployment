@@ -14,7 +14,7 @@ const mongoose = require('mongoose');
 // @access private (USer must be logged in to create a post)
 
 router.post(
-	'/api/posts',
+	'/posts',
 	[auth, [check('text', 'Text is required').not().isEmpty()]],
 	async (req, res) => {
 		console.log('Posts route hit');
@@ -56,7 +56,7 @@ router.post(
 // @desc Get all posts
 // @access private (Users must be logged in to see comments)
 
-router.get('/api/posts', auth, async (req, res) => {
+router.get('/posts', auth, async (req, res) => {
 	try {
 		// Sorting by -1 will return the most recent posts
 		const posts = await Post.find().sort({ date: -1 });
@@ -73,7 +73,7 @@ router.get('/api/posts', auth, async (req, res) => {
 // @desc Get post by id
 // @access private (Users must be logged in to see comments)
 
-router.get('/api/posts/:id', auth, async (req, res) => {
+router.get('/posts/:id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 
@@ -98,7 +98,7 @@ router.get('/api/posts/:id', auth, async (req, res) => {
 // @desc Delete post by id
 // @access private (User must be logged in to delete => This is a user admin log in (The content provider))
 
-router.delete('/api/posts/:id', auth, async (req, res) => {
+router.delete('/posts/:id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 
@@ -130,7 +130,7 @@ router.delete('/api/posts/:id', auth, async (req, res) => {
 // @route PUT /post/like/:id
 // @desc Like a post
 // @access private
-router.put('/api/posts/like/:id', auth, async (req, res) => {
+router.put('/posts/like/:id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 
@@ -168,7 +168,7 @@ router.put('/api/posts/like/:id', auth, async (req, res) => {
 // @route PUT /post/unlike/:id
 // @desc Like a post
 // @access private
-router.put('/api/posts/unlike/:id', auth, async (req, res) => {
+router.put('/posts/unlike/:id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 
@@ -205,7 +205,7 @@ router.put('/api/posts/unlike/:id', auth, async (req, res) => {
 // @access private (USer must be logged in to comment on a post)
 
 router.post(
-	'/api/posts/comment/:id',
+	'/posts/comment/:id',
 	[auth, [check('text', 'Text is required').not().isEmpty()]],
 	async (req, res) => {
 		console.log('Posts route hit');
@@ -250,7 +250,7 @@ router.post(
 // @route DELETE /posts/comment/:id/:comment_id
 // @desc Delete on a post
 // @access private (USer must be logged in to delete a post)
-router.delete('/api/posts/comment/:id/:comment_id', auth, async (req, res) => {
+router.delete('/posts/comment/:id/:comment_id', auth, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 

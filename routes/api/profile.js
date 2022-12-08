@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 // @route GET /profile/me
 // @desc get the signed in user profile
 // @access pvt route => route accessed via token
-router.get('/api/profile/me', auth, async (req, res) => {
+router.get('/profile/me', auth, async (req, res) => {
 	try {
 		// See #Note 1 below
 		const profile = await Profile.findOne({ user: req.user.id }).populate(
@@ -36,7 +36,7 @@ router.get('/api/profile/me', auth, async (req, res) => {
 	Futhermore, it is this token that provides the user id the Profile model requires to create a relational link between Profile and User via the user.id (Provided by mongo)
 */
 router.post(
-	'/api/profile',
+	'/profile',
 	[
 		auth,
 		[
@@ -132,7 +132,7 @@ router.post(
 // @route GET /profile
 // @desc Get all profiles (No auth required as this should be available for all to access)
 // @access Public
-router.get('/api/profile', async (req, res) => {
+router.get('/profile', async (req, res) => {
 	try {
 		// #Note 2
 		const profiles = await Profile.find().populate('user', ['name', 'avatar']);
@@ -148,7 +148,7 @@ router.get('/api/profile', async (req, res) => {
 // @route GET /profile/user/:user_id
 // @desc Get profile by user id
 // @access Public
-router.get('/api/profile/user/:user_id', async (req, res) => {
+router.get('/profile/user/:user_id', async (req, res) => {
 	try {
 		// #Note 2
 		const profile = await Profile.findOne({
@@ -176,7 +176,7 @@ router.get('/api/profile/user/:user_id', async (req, res) => {
 // @route DELETE /profile/user/:user_id
 // @desc DELETE profile, user & post
 // @access Private
-router.delete('/api/profile', auth, async (req, res) => {
+router.delete('/profile', auth, async (req, res) => {
 	try {
 		//  @todo - remove users posts
 
@@ -200,7 +200,7 @@ router.delete('/api/profile', auth, async (req, res) => {
 // @access Private
 
 router.put(
-	'/api/profile/experience',
+	'/profile/experience',
 	[
 		auth,
 		[
@@ -262,7 +262,7 @@ router.put(
 */
 // @access Private - Only an Authenticated user will be able to update their experience
 router.put(
-	'/api/profile/experience/:exp_id',
+	'/profile/experience/:exp_id',
 	[
 		auth,
 		[
@@ -328,7 +328,7 @@ router.put(
 */
 // @desc     Delete exp from profile
 // @access   Private
-router.delete('/api/profile/experience/:exp_id', auth, async (req, res) => {
+router.delete('/profile/experience/:exp_id', auth, async (req, res) => {
 	try {
 		// Get the profile of the authenticated user
 		const profile = await Profile.findOne({ user: req.user.id });
@@ -361,7 +361,7 @@ router.delete('/api/profile/experience/:exp_id', auth, async (req, res) => {
 // @desc     Add Education to profile
 // @access   Private
 router.post(
-	'/api/profile/education/',
+	'/profile/education/',
 	[
 		auth,
 		[
@@ -423,7 +423,7 @@ router.post(
 */
 // @desc     Delete Education from profile profile
 // @access   Private
-router.delete('/api/profile/education/:edu_id', auth, async (req, res) => {
+router.delete('/profile/education/:edu_id', auth, async (req, res) => {
 	try {
 		// Get the profile of the authenticated user
 		const profile = await Profile.findOne({ user: req.user.id });

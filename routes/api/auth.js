@@ -10,7 +10,7 @@ const User = require('../../models/User');
 // @route GET api/auth
 // @desc Get Authenticated user after signUp/Registration
 // @access Pvt - Route requires a jwt generated at signup(user route)
-router.get('/api/auth', auth, async (req, res) => {
+router.get('/auth', auth, async (req, res) => {
 	try {
 		// Do not return pw
 		// This user will be stored in redux store
@@ -36,7 +36,7 @@ router.get('/api/auth', auth, async (req, res) => {
 		- Return verified user 
 */
 router.post(
-	'/api/auth',
+	'/auth',
 	[
 		check('email', 'Please include a valid email').isEmail(),
 		check('password', 'Password is required').exists(),

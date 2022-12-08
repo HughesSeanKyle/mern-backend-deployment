@@ -18,15 +18,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ extended: false }));
 app.use(cors());
 
-// Define Routes
-/*
-	Reference this for restful route guide 
-	- https://medium.com/@shubhangirajagrawal/the-7-restful-routes-a8e84201f206
-*/
-
-/*
-19/08 - Update all other routes like user router. Then continue with client. Push to Netlify and use heroku routes when building out app further
-*/
+// Routes
 app.use(userRouter);
 app.use(authRouter);
 app.use(postRouter);

@@ -10,7 +10,7 @@ const Chart = require('../../models/Chart');
 // @access - public - No auth checks in place yet
 
 // Create a chart
-router.post('/api/chart', async (req, res) => {
+router.post('/chart', async (req, res) => {
 	const { chartName, chartType, createdBy } = req.body;
 
 	try {

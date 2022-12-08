@@ -14,7 +14,7 @@ const User = require('../../models/User');
     When this route becomes private then a token will need to be sent along to validate if the client can access this route 
 */
 router.post(
-	'/api/user',
+	'/user',
 	[
 		check('name', 'Name is required').not().isEmpty(),
 		check('email', 'Please include a valid email').isEmail(),

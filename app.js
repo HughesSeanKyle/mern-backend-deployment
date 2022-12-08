@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const connectToMongo = require('./config/db')();
 const path = require('path');
+const cors = require('cors');
 
 const userRouter = require('./routes/api/users');
 const authRouter = require('./routes/api/auth');
 const postRouter = require('./routes/api/post');
+const projectRouter = require('./routes/api/project');
 const profileRouter = require('./routes/api/profile');
 const chartRouter = require('./routes/api/chart');
 
@@ -14,20 +16,18 @@ const PORT = process.env.PORT || 5000;
 
 // Init Middleware
 app.use(express.json({ extended: false }));
+app.use(cors());
 
-// Define Routes
-/*
-	Reference this for restful route guide 
-	- https://medium.com/@shubhangirajagrawal/the-7-restful-routes-a8e84201f206
-*/
+// Routes
 app.use(userRouter);
-app.use('/auth', authRouter);
-app.use('/post', postRouter);
-app.use('/profile', profileRouter);
-app.use('/chart', chartRouter);
+app.use(authRouter);
+app.use(postRouter);
+app.use(projectRouter);
+app.use(profileRouter);
+app.use(chartRouter);
 
 app.get('/test-get', (req, res) => {
-	res.send('Hello from the root route');
+	res.send('Hello from the root route. Update, Two three four ');
 });
 
 // Serve static assets in production

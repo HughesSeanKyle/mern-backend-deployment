@@ -1,6 +1,5 @@
 {
 	"version": 2,
 	"name": "test-deploy",
-	"builds": [{ "src": "app.js", "use": "@vercel/node" }],
 	"routes": [{ "src": "/(.*)", "dest": "/app.js" }]
 }
